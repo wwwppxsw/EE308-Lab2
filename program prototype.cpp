@@ -30,9 +30,12 @@ int main(){
 		int pos;//单词的位置
 		for(;;){
 				if(str.find(keyword[i]) != -1){//返回-1表示句子里没有该单词
-					pos = str.find(keyword[i]);//找到首次出现单词位置
-					count[i]++;
-					str = str.substr(pos + keyword[i].length(),str.length() - pos - keyword[i].length());//截取子串存入substr
+					if(str.find("//") != -1) break;//忽略注释 
+					else{
+						pos = str.find(keyword[i]);//找到首次出现单词位置
+						count[i]++;
+						str = str.substr(pos + keyword[i].length(),str.length() - pos - keyword[i].length());//截取子串存入substr
+					}
 				} 
 				else break;
 			}	
@@ -50,20 +53,29 @@ int main(){
 		int pos;//单词的位置
 		for(;;){
 			if(str.find(keyword[num[1]]) != -1){
-				struc[x[0]]++;
-				break;
+				if(str.find("//") != -1) break;//忽略注释 
+				else{
+					struc[x[0]]++;
+					break;
+				}
 			}
 			if(str.find(keyword[num[2]]) != -1){
-				x[0]++;
-				break;
+				if(str.find("//") != -1) break;//忽略注释 
+				else{
+					x[0]++;
+					break;
+				}
 			}
 			if(str.find(pick[0]) != -1){
 				pos = str.find(pick[0]);
 				str = str.substr(pos + pick[0].length(),str.length() - pos - pick[0].length());
 			}
 			if(str.find(pick[1]) != -1){
-				x[1]++;//确认总共有几个if 
-				break;
+				if(str.find("//") != -1) break;//忽略注释 
+				else{
+					x[1]++;//确认总共有几个有效if 
+					break;
+				}
 			}
 			else break;
 		}	
@@ -73,15 +85,29 @@ int main(){
 		int pos;
 		for(;;){
 			if(str.find(pick[0]) != -1){
-				divide[x[2]]++;
-				break;
+				if(str.find("//") != -1) break;//忽略注释 
+				else{
+					divide[x[2]]++;
+					break;
+				} 
 			}
 			if(str.find(keyword[num[3]]) != -1){
-				x[2]++;
-				break;
+				if(str.find("//") != -1) break;//忽略注释 
+				else{
+					x[2]++;
+					break;
+				}
 			}
 			else break;
 		}
+	}
+	for(int m=0;m<x[1];m++){
+		if(divide[m]==0){
+			eln++;
+		}
+		else{
+			ely++;				
+		}	
 	}
 	for(int o=1; o<con+1; o++){
 		switch(o){
@@ -94,20 +120,17 @@ int main(){
 			}
 			break;
 		case 2:
-			cout<<"The number of switch structure is:"<<count[num[0]]<<endl;
-			for(int k=0;k<count[num[0]];k++){
-			cout<<"switch "<<k+1<<" number of case is: "<<struc[k]<<endl;
+			if(count[num[0]]!=count[num[2]]){
+				cout<<" wrong switch structure"<<endl;
+			}
+			else{
+				cout<<"The number of switch structure is:"<<count[num[0]]<<endl;
+				for(int k=0;k<count[num[0]];k++){
+				cout<<"switch "<<k+1<<" number of case is: "<<struc[k]<<endl;
+			}
 			}
 			break;
 		case 3:
-			for(int m=0;m<x[1];m++){
-			if(divide[m]==0){
-				eln++;
-				}
-			else{
-				ely++;				
-				}	
-			}
 			cout<<"the number of if-else: "<<eln<<endl;
 			break;
 		case 4:
